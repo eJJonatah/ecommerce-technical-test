@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="IBM437"?>
+<!-- Definições globais dos projetos em diferentes estados como:
+DEBUG - desenvolvimento local focado em observabilidade e supressão de warnings
+REELASE - export para serviço acusando warnings como erros e habilitando algumas
+otimizações para uso como serviço
+-->
+
+<Project DefaultTargets="Build">
+  <Import Project="csharp_analyzers.props" />
+
+  <PropertyGroup Label="Global">
+    <RootNamespace>TEcomerc</RootNamespace>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    <Deterministic>true</Deterministic>
+
+    <!-- Pre compilation properties -->
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+
+    <!-- Minimum required project configuration -->
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <NoWarn> $(NoWarn);
+    1735; 0824; 8500; CA1715; IDE0008; IDE0021;
+    IDE0040; IDE0055; IDE0057; IDE0065; IDE1005;
+    IDE1006; IDE0079; RCS1196; IDE0160; S101;
+    IDE0290; S4136; CA1068; RCS1205; RCS1158;
+    EPS06; S1121; S112; CA2007</NoWarn>
+
+    <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
+    <AccelerateBuildsInVisualStudio>True</AccelerateBuildsInVisualStudio>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AnalysisMode>All</AnalysisMode>
+
+    <!-- After compilation properties -->
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <UseWindowsThreadPool>True</UseWindowsThreadPool>
+    <BaseOutputPath>$(SolutionDir)\bin</BaseOutputPath>
+
+  </PropertyGroup>
+  <PropertyGroup Condition="'Release'=='$(Configuration)'">
+    <CodeAnalysisTreatWarningsAsErrors>True</CodeAnalysisTreatWarningsAsErrors>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	  <DebugType>none</DebugType>
+	  <Optimize>True</Optimize>
+	  <TrimMode>full</TrimMode>
+
+  </PropertyGroup>
+  <PropertyGroup Condition="'Debug'=='$(Configuration)'">
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+  </PropertyGroup>
+
+</Project>

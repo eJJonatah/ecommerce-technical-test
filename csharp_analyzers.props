@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="IBM437"?>
+<!-- Inclusão de alguns analyzers recomendados pela comuniade focados em detecção de erros,
+imprecisões e falhas conhecidas comunmente cometidas em projeto .NET, como unboxing implicito
+de structs, copias evitáveis, entre outros. -->
+
+<Project DefaultTargets="Build">
+  <ItemGroup>
+	  <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="ErrorProne.NET.Structs" Version="0.1.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="10.8.0.113526">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+	  <PackageReference Include="roslynator.analyzers" Version="4.13.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+  </ItemGroup>
+</Project>
