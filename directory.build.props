@@ -27,7 +27,8 @@ otimizações para uso como serviço
     IDE0040; IDE0055; IDE0057; IDE0065; IDE1005;
     IDE1006; IDE0079; RCS1196; IDE0160; S101;
     IDE0290; S4136; CA1068; RCS1205; RCS1158;
-    EPS06; S1121; S112; CA2007</NoWarn>
+    EPS06; S1121; S112; CA2007; RCS0063;
+    RCS1063 </NoWarn>
 
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
     <AccelerateBuildsInVisualStudio>True</AccelerateBuildsInVisualStudio>
