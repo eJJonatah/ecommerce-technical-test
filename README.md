@@ -1,104 +1,92 @@
-# TEcomerc - E-commerce Technical Test
+# TEcomerc - Teste Técnico de E-commerce
 
-A minimal e-commerce backend implemented in .NET 10 intended as a technical test. This repository includes an API, persistence with SQLite, unit and end-to-end tests, and sample authentication using JWT.
+Um backend minimalista de e-commerce implementado em .NET 10, voltado para teste técnico. Este repositório inclui uma API, persistência com SQLite, testes unitários e de ponta a ponta (E2E), além de um exemplo de autenticação utilizando JWT.
 
-## Project capabilities
+## Funcionalidades do projeto
 
-- REST API for order management (create, read, list, update)
-- Authentication endpoint that issues JWT tokens
-- SQLite-backed repository implementations (EF Core)
-- End-to-end tests using Microsoft.AspNetCore.Mvc.Testing
-- Clean separation between Application, Domain, and Infrastructure layers
+- API REST para gerenciamento de pedidos (criar, ler, listar, atualizar)
+- Endpoint de autenticação que emite tokens JWT
+- Implementações de repositório baseadas em SQLite (EF Core)
+- Testes de ponta a ponta usando `Microsoft.AspNetCore.Mvc.Testing`
+- Separação clara entre as camadas de Aplicação (Application), Domínio (Domain) e Infraestrutura (Infrastructure)
 
-## Tech stack
+## Tecnologias utilizadas
 
 - .NET 10
 - C#
 - ASP.NET Core Web API
-- Entity Framework Core with SQLite
-- xUnit for tests
-- Microsoft.AspNetCore.Mvc.Testing for E2E tests
+- Entity Framework Core com SQLite
+- xUnit para testes
+- Microsoft.AspNetCore.Mvc.Testing para testes E2E
 
-## Getting started (Visual Studio 2022)
+## Como começar (Visual Studio 2022)
 
-1. Open the solution in Visual Studio 2022.
-2. Ensure the .NET SDK 10 is installed.
-3. Build the solution: __Build > Build Solution__ or run the __BuildSolution__ command.
-4. Set the API project as the startup project and run (F5) or run without debugging (Ctrl+F5).
+1. Abra a solução no Visual Studio 2022.
+2. Certifique-se de ter o SDK do .NET 10 instalado.
+3. Compilar a solução: __Compilação > Compilar Solução__ ou execute o comando __BuildSolution__.
+4. Defina o projeto da API como o projeto de inicialização e execute (F5) ou execute sem depurar (Ctrl+F5).
 
-> **Note:** The repository uses an `.editorconfig` and `CONTRIBUTING.md` for coding standards. Follow those files for formatting and contribution rules.
+## Instruções de linha de comando (CLI)
 
-## CLI instructions
+A partir da raiz do repositório:
 
-From the repository root:
-
-- Restore and build
+- Restaurar e compilar
 
     ```bash
     dotnet restore
     dotnet build
     ```
 
-- Run the API
+- Executar a API
 
     ```bash
     dotnet run --project src/Api/Api.csproj
     ```
 
-- Run tests
+- Executar os testes
 
     ```bash
     dotnet test
     ```
 
-## Configuration & Database
+## Configuração e Banco de Dados
 
-- The default persistence uses SQLite located under the application configuration. The database file path and migrations (if any) are configured in the infrastructure project.
-- To reset the database, delete the SQLite file used by the app (path configurable) and restart the application. On first run, the app will initialize the schema.
+- A persistência padrão utiliza o SQLite localizado conforme as configurações da aplicação. O caminho do arquivo do banco de dados e as migrações (se houver) estão configurados no projeto de infraestrutura.
+- Para redefinir o banco de dados, exclua o arquivo SQLite utilizado pela aplicação (caminho configurável) e reinicie-a. Na primeira execução, a aplicação irá inicializar o esquema.
 
-## Authentication
+## Autenticação
 
-- The API exposes an authentication endpoint used by the E2E tests (see tests/E2E/%auth%login/POST.cs).
-- Client credentials used in tests:
-  - **User:** `dev@martech.com`
-  - **Password:** `Senha@123`
-- Successful login returns a JSON response containing a `JWT` token string. Use this token in `Authorization: Bearer <token>` when calling protected endpoints.
+- A API expõe um endpoint de autenticação utilizado pelos testes E2E (veja `tests/E2E/%auth%login/POST.cs`).
+- Credenciais de cliente utilizadas nos testes:
+  - **Usuário:** `dev@martech.com`
+  - **Senha:** `Senha@123`
+- Um login bem-sucedido retorna uma resposta em JSON contendo a string do token `JWT`. Utilize esse token em `Authorization: Bearer <token>` ao chamar endpoints protegidos.
 
-## Example request (login)
+## Exemplo de requisição (login)
 
 **POST** `/auth/login`
 
+```http
 POST /auth/login HTTP/1.1
 Content-Type: application/json
 
 { "user": "dev@martech.com", "password": "Senha@123" }
+```
 
-## Orders API (overview)
+## API de Pedidos (visão geral)
 
-Typical capabilities (check controllers for full routes and payloads):
+Funcionalidades típicas (verifique os controllers para rotas e dados completos):
 
-- Create order
-- Read order by id
-- List orders with paging and optional inclusion of items
-- Update order fields (status, customerId, etc.)
+- Criar pedido
+- Ler pedido por ID
+- Listar pedidos com paginação e inclusão opcional de itens
+- Atualizar campos do pedido (status, customerId, etc.)
 
-The infrastructure includes `SqliteOrderRepository` which persists orders and supports paging and item inclusion.
+A infraestrutura inclui o `SqliteOrderRepository`, que persiste os pedidos e suporta paginação e inclusão de itens.
 
-## Tests
+## Testes
 
-- Unit tests and E2E tests are included. E2E tests use an in-memory test server created with `WebApplicationFactory<Program>` and target authentication and order flows.
-- Run all tests with `dotnet test`.
+- Testes unitários e testes E2E estão incluídos. Os testes E2E utilizam um servidor de testes em memória criado com `WebApplicationFactory<Program>` e têm como alvo os fluxos de autenticação e pedidos.
+- Execute todos os testes com `dotnet test`.
 
-## Development notes
-
-- Follow the repository's `.editorconfig` and `CONTRIBUTING.md` for coding style and contribution conventions.
-- The project targets .NET 10. Use the matching SDK and runtime.
-- When debugging tests in Visual Studio, you can attach the debugger or run tests with the Test Explorer.
-
-## Contributing
-
-- Fork the repository, create a feature branch, follow code standards, add tests for new behavior, and open a pull request targeting `master`.
-
-## License
-
-This project is provided for evaluation and technical testing purposes. Check the repository license or policy in the root if present.
+Este projeto é fornecido para fins de avaliação e testes técnicos. Verifique a licença ou política do repositório na raiz, caso esteja presente.
