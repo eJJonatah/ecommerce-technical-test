@@ -2,6 +2,8 @@
 
 Um backend minimalista de e-commerce implementado em .NET 10, voltado para teste técnico. Este repositório inclui uma API, persistência com SQLite, testes unitários e de ponta a ponta (E2E), além de um exemplo de autenticação utilizando JWT.
 
+Algumas decisões arquiteturais foram registradas em um [ADL](https://github.com/eJJonatah/ecommerce-technical-test/tree/master/docs/architecture-decision-log) confira!
+
 ## Funcionalidades do projeto
 
 - API REST para gerenciamento de pedidos (criar, ler, listar, atualizar)
