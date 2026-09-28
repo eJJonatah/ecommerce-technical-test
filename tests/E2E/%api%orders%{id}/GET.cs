@@ -1,3 +1,5 @@
+#pragma warning disable CA1515 // Consider making public types internal
+
 namespace TEcomerc.Tests.E2e;
 
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -5,15 +7,14 @@ using TEcomerc.Domain.ValueObjects;
 using TEcomerc.Domain.Entities;
 using TEcomerc.Tests.Resources;
 using System.Net.Http.Json;
-using System.Net;
 
-public sealed class PostApiOrders : IAsyncLifetime, IClassFixture<WebApplicationFactory<Program>>
+public sealed class GetIdApiOrders : IAsyncLifetime, IClassFixture<WebApplicationFactory<Program>>
 {
     HttpClient api = default!;
     HttpClient apiLogout = default!;
-    readonly WebApplicationFactory<Program> webappFactory;
     readonly DatabaseFixture databaseLifetime = new();
-	public PostApiOrders(WebApplicationFactory<Program> webApplicationFactory)
+    readonly WebApplicationFactory<Program> webappFactory;
+	public GetIdApiOrders(WebApplicationFactory<Program> webApplicationFactory)
 	{
 		webappFactory = webApplicationFactory;
 	}
@@ -27,7 +28,7 @@ public sealed class PostApiOrders : IAsyncLifetime, IClassFixture<WebApplication
         await databaseLifetime.InitializeAsync();
     }
 
-    [Fact] public async Task POST_NewOrder()
+    [Fact] public async Task GET_OrderById()
     {
         if (System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Break(); }
 
@@ -67,47 +68,17 @@ public sealed class PostApiOrders : IAsyncLifetime, IClassFixture<WebApplication
 
         var response = await api.PostAsJsonAsync(RouteFormats.API_ORDERS, orderEntity);
         _ = response.EnsureSuccessStatusCode();
-        var content = await response.Content.ReadAsStringAsync();
-        content = content.Trim('\"');
 
-        Assert.Equal(orderId, Guid.Parse(content));
-    }
+        var content = await api.GetFromJsonAsync<OrderValues<OrderItemValues>>(
+            string.Format(RouteFormats.FMT_API_ORDERS__ID, orderId)
+        );
 
-    [Fact] public async Task POST_InvalidOrder()
-    {
-        if (System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Break(); }
-
-        var response = await api.PostAsJsonAsync(RouteFormats.API_ORDERS, new OrderValues<OrderItem>
-        (
-            Id: Guid.NewGuid(),
-            CustomerId: Guid.NewGuid(),
-            Status: OrderStatus.Pending,
-            CreatedAt: DateTime.Now,
-            Items: []
-        ));
-
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    }
-
-    [Fact] public async Task POST_Unauthorized()
-    {
-        if (System.Diagnostics.Debugger.IsAttached) { System.Diagnostics.Debugger.Break(); }
-
-        var response = await apiLogout.PostAsJsonAsync(RouteFormats.API_ORDERS, new OrderValues<OrderItem>
-        (
-            Id: Guid.NewGuid(),
-            CustomerId: Guid.NewGuid(),
-            Status: OrderStatus.Pending,
-            CreatedAt: DateTime.Now,
-            Items: []
-        ));
-
-        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        Assert.Equal(orderId, content?.Id);
     }
 
     public async Task DisposeAsync()
     {
-        await databaseLifetime.DisposeAsync();
+        await databaseLifetime.InitializeAsync();
         apiLogout.Dispose();
         api.Dispose();
     }

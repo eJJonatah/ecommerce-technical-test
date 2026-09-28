@@ -28,7 +28,8 @@ otimizações para uso como serviço
     IDE1006; IDE0079; RCS1196; IDE0160; S101;
     IDE0290; S4136; CA1068; RCS1205; RCS1158;
     EPS06; S1121; S112; CA2007; RCS0063;
-    RCS1063 </NoWarn>
+    RCS1036; CS1591; CA1040; AMNF0001; 
+    CA1863; CA1305</NoWarn>
 
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
     <AccelerateBuildsInVisualStudio>True</AccelerateBuildsInVisualStudio>
@@ -41,7 +42,7 @@ otimizações para uso como serviço
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <UseWindowsThreadPool>True</UseWindowsThreadPool>
-    <BaseOutputPath>$(SolutionDir)\bin</BaseOutputPath>
+    <BaseOutputPath>$(SolutionDir)bin</BaseOutputPath>
 
   </PropertyGroup>
   <PropertyGroup Condition="'Release'=='$(Configuration)'">
@@ -55,6 +56,9 @@ otimizações para uso como serviço
   </PropertyGroup>
   <PropertyGroup Condition="'Debug'=='$(Configuration)'">
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
 
   </PropertyGroup>
 
